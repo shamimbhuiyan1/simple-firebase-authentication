@@ -64,7 +64,13 @@ function App() {
       )}
       <h2>Name: {user.displayName} </h2>
       <p>Email: {user.email} </p>
-      <img src={user.photoURL} alt="" />
+      <img
+        width={200}
+        style={{ borderRadius: "10px" }}
+        src={user.photoURL}
+        alt="Shamim Bhuiyan"
+        title="shamim"
+      />
     </div>
   );
 }
