@@ -1,5 +1,6 @@
 import "./App.css";
 import {
+  FacebookAuthProvider,
   getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -15,6 +16,7 @@ function App() {
   const [user, setUser] = useState({});
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
@@ -50,16 +52,29 @@ function App() {
         setUser(email);
       });
   };
+
+  //facebook
+  const handleFacebookSignIn = () => {
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="App">
       {/* conditionaling rendering ternary operator :condition?true:false */}
 
-      {user.email ? (
+      {user.uid ? (
         <button onClick={handleSignOut}>Sign Out</button>
       ) : (
         <>
           <button onClick={handleGoogleSignIn}>Google Sign In</button>
           <button onClick={handleGithubSignIn}>Github Sign In</button>
+          <button onClick={handleFacebookSignIn}>Facebook Sign In</button>
         </>
       )}
       <h2>Name: {user.displayName} </h2>
@@ -68,8 +83,7 @@ function App() {
         width={200}
         style={{ borderRadius: "10px" }}
         src={user.photoURL}
-        alt="Shamim Bhuiyan"
-        title="shamim"
+        alt=""
       />
     </div>
   );
